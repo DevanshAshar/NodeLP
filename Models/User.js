@@ -30,7 +30,7 @@ const custSchema=new mongoose.Schema({
         type:Number,
         required:true,
         unique:[true,'mobile no. exists'],
-        length:[10,'Mobile Number must be 10 digits ']
+        length:[10,'Mobile Number must be 10 digits '],
     },
     role:{
         type:String,
