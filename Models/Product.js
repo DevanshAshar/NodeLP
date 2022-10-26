@@ -37,6 +37,6 @@ const prodSchema=new mongoose.Schema({
         type:String,
         required:true
     }   
-})
+},{timestamps:true})
 const Product=mongoose.model('Product',prodSchema)
 module.exports=Product

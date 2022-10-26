@@ -37,6 +37,6 @@ const custSchema=new mongoose.Schema({
         required:true,
         enum:['customer','seller']
     }
-})
+},{timestamps:true})
 const User=mongoose.model('User',custSchema)
 module.exports=User

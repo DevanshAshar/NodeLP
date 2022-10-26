@@ -9,15 +9,13 @@ const {
     category,
     updateProd,
     deleteProd
-    //filterProd
 }=require('../Controllers/Product')
 router.post('/newProduct',newProduct)
 router.get('/products',products)
-router.get('/:seller',seller)
-router.get('/:prodname',prodname)
-router.get('/:brand',brand)
-router.get('/:category',category)
-//router.get('/:req.params',filterProd)
-router.put('/',updateProd)
-router.delete('/:prodId',deleteProd)
+router.get('/seller/:seller',seller)
+router.get('/:id',prodname)
+router.get('/brand/:brand',brand)
+router.get('/category/:category',category)
+router.patch('/:id',updateProd)
+router.delete('/:id',deleteProd)
 module.exports=router

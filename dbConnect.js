@@ -1,5 +1,7 @@
 const mongoose=require('mongoose')
-const db="mongodb+srv://devanshAshar:devanshNode@cluster0.dedofov.mongodb.net/E-Comm?retryWrites=true&w=majority";
+const dotenv=require('dotenv')
+dotenv.config()
+const db=process.env.Url;
 mongoose.connect(db,{
     useNewUrlParser:true,
     //useCreateIndex:true,
