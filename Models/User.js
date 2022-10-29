@@ -1,10 +1,10 @@
 const mongoose=require('mongoose')
 const validator=require('validator')
-const custSchema=new mongoose.Schema({
+const bcrypt=require('bcrypt')
+const userSchema=new mongoose.Schema({
     username:{
         type:String,
-        required:true,
-        unique:[true,'username already exists']
+        required:true
     },
     password:{
         type:String,
@@ -38,5 +38,13 @@ const custSchema=new mongoose.Schema({
         enum:['customer','seller']
     }
 },{timestamps:true})
-const User=mongoose.model('User',custSchema)
+
+userSchema.pre('save',async function(next){
+    if(this.isModified('password'))
+    {
+        this.password=await bcrypt.hash(this.password,9)
+    }
+    next()
+})
+const User=mongoose.model('User',userSchema)
 module.exports=User
