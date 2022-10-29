@@ -13,6 +13,21 @@ const newUser=async(req,resp)=>{
     } catch (error) {
         resp.status(500).json({message:error.message}) 
     }
+}
+const userLogin=async(req,resp)=>{
+    const {email,password}=req.body
+    if(!email || !password)
+    return resp.status(400).json({error:'Please Fill the Details'})
+    const user=new User(req.body)
+    try {
+            const userData=await User.findOne({email:email , password:password})
+            if(!userData)
+            resp.status(400).json({error:'user not found'})
+            else
+            resp.status(200).send(userData)
+    } catch (error) {
+        resp.status(404).send(error.message)
+    }
 }   
 const users=async(req,resp)=>{
     try {
@@ -70,6 +85,7 @@ const deleteUser=async(req,resp)=>{
 }
 module.exports={
     newUser,
+    userLogin,
     users,
     customers,
     sellers,
