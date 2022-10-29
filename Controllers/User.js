@@ -1,4 +1,5 @@
 const express=require('express')
+const bcrypt=require('bcrypt')
 const app=express()
 const User=require('../Models/User')
 app.use(express.json()) 
@@ -20,8 +21,9 @@ const userLogin=async(req,resp)=>{
     return resp.status(400).json({error:'Please Fill the Details'})
     const user=new User(req.body)
     try {
-            const userData=await User.findOne({email:email , password:password})
-            if(!userData)
+            const userData=await User.findOne({email:req.body.email})
+            const validPassword=await bcrypt.compare(req.body.password,userData.password)
+            if(!userData && !validPassword)
             resp.status(400).json({error:'user not found'})
             else
             resp.status(200).send(userData)
