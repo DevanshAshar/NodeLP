@@ -1,4 +1,5 @@
 const mongoose=require('mongoose')
+const jwt=require('jsonwebtoken')
 const validator=require('validator')
 const bcrypt=require('bcrypt')
 const userSchema=new mongoose.Schema({
@@ -36,7 +37,15 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true,
         enum:['customer','seller']
-    }
+    },
+    tokens:[
+        {
+            token:{
+                type:String,
+                required:true
+            }
+        }
+    ]
 },{timestamps:true})
 
 userSchema.pre('save',async function(next){
@@ -46,5 +55,15 @@ userSchema.pre('save',async function(next){
     }
     next()
 })
+userSchema.methods.generateAuthToken=async function(){
+    try {
+        let token=jwt.sign({_id:this._id},process.env.SecretKey)
+        this.tokens=this.tokens.concat({token})
+        await this.save()
+        return token
+    } catch (error) {
+        console.log(error)
+    }
+}
 const User=mongoose.model('User',userSchema)
 module.exports=User

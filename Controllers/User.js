@@ -1,5 +1,6 @@
 const express=require('express')
 const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken')
 const app=express()
 const User=require('../Models/User')
 app.use(express.json()) 
@@ -10,6 +11,7 @@ const newUser=async(req,resp)=>{
     const user=new User(req.body)
     try {
         await user.save()
+        const token=await User.generateAuthToken(user._id)
         resp.json({message:'Success'}).status(200)
     } catch (error) {
         resp.status(500).json({message:error.message}) 
@@ -23,14 +25,18 @@ const userLogin=async(req,resp)=>{
     try {
             const userData=await User.findOne({email:req.body.email})
             const validPassword=await bcrypt.compare(req.body.password,userData.password)
-            if(!userData && !validPassword)
-            resp.status(400).json({error:'user not found'})
+            if(!userData || !validPassword)
+            resp.json({error:'Invalid credentials'})
             else
-            resp.status(200).send(userData)
+            {
+               const token=jwt.sign({email:req.body.email},process.env.SecretKey)
+                return resp.status(200).json({token:token,userData})
+            }
     } catch (error) {
         resp.status(404).send(error.message)
+    } 
     }
-}   
+  
 const users=async(req,resp)=>{
     try {
         let data=await User.find()
