@@ -4,8 +4,12 @@ const User = require('../Models/User')
 const authentication=async(req,res,next)=>{
     try {
         let token=req.header('AuthenticateUser')
+        if(typeof(token)==="undefined")
+        return res.status(401).json({error:'Unauthorized'})
+        else
+        {
         if(token.startsWith('Bearer ')){
-            token=token.slice(7,token.length)
+        token=token.slice(7,token.length)
         }
         if(token)
         {
@@ -14,13 +18,14 @@ const authentication=async(req,res,next)=>{
                 //console.log(data)
                 const user=await User.findOne({email:data.email})
                 if(!user)
-                res.status(401).send('Unauthorized')
+                return res.status(401).json({error:'Unauthorized'})
             } catch (error) {
-                res.status(400).json({error:'Invalid Token'})
+                return res.status(400).json({error:'Invalid Token'})
             }
         }
         else
-        res.status(400).json({error:'Invalid Token'})
+        return res.status(400).json({error:'Invalid Token'})
+    }
 }catch (error) {
     res.status(401).send(error.message)
 }
@@ -29,6 +34,10 @@ next()
 const authorization=async(req,res,next)=>{
     try{
         let token=req.header('AuthorizeUser')
+        if(typeof(token)==="undefined")
+        return res.status(401).json({error:'Unauthorized'})
+        else
+        {
         if(token.startsWith('Bearer ')){
             token=token.slice(7,token.length)
         }
@@ -38,17 +47,20 @@ const authorization=async(req,res,next)=>{
                 const data=jwt.verify(token,process.env.SecretKey)
                 const user=await User.findOne({email:data.email})
                 if(!user || user.role!='admin')
-                res.status(401).send('Unauthorized')
+                return res.status(401).json({error:'Unauthorized'})
             }
             catch(error)
             {
-                res.stats(404).send(error.message)
+                return res.status(400).json({error:error.message})
             }
         }
+        else
+        return res.status(400).json({error:'Invalid Token'})
+    }
     }
     catch(error)
     {
-        res.status(404).send(error.message)
+        return res.status(404).send({error:error.message})
     }
     next()
 }
