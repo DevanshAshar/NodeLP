@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken')
+const Product = require('../Models/Product')
 const dotenv = require('dotenv').config()
 const User = require('../Models/User')
-const authentication=async(req,res,next)=>{
+const authentication={
+
+    verifyToken:async(req,res,next)=>{
     try {
         let token=req.header('AuthenticateUser')
         if(typeof(token)==="undefined")
@@ -15,10 +18,12 @@ const authentication=async(req,res,next)=>{
         {
             try {
                 const data=jwt.verify(token,process.env.SecretKey)
-                //console.log(data)
                 const user=await User.findOne({email:data.email})
                 if(!user)
                 return res.status(401).json({error:'Unauthorized'})
+                
+                userData=user
+                next()
             } catch (error) {
                 return res.status(400).json({error:'Invalid Token'})
             }
@@ -27,41 +32,58 @@ const authentication=async(req,res,next)=>{
         return res.status(400).json({error:'Invalid Token'})
     }
 }catch (error) {
-    res.status(401).send(error.message)
+    return res.status(401).send(error.message)
 }
-next()
-}
-const authorization=async(req,res,next)=>{
-    try{
-        let token=req.header('AuthorizeUser')
-        if(typeof(token)==="undefined")
-        return res.status(401).json({error:'Unauthorized'})
+},
+
+verifyUser:async(req,res,next)=>{
+    try {
+        const user=await User.findById(req.params.id)
+        if(user.email===userData.email)
+        next()
         else
-        {
-        if(token.startsWith('Bearer ')){
-            token=token.slice(7,token.length)
-        }
-        if(token)
-        {
-            try{
-                const data=jwt.verify(token,process.env.SecretKey)
-                const user=await User.findOne({email:data.email})
-                if(!user || user.role!='admin')
-                return res.status(401).json({error:'Unauthorized'})
-            }
-            catch(error)
-            {
-                return res.status(400).json({error:error.message})
-            }
-        }
+        return res.status(401).json({error:'invalid user'})
+    } catch (error) {
+        res.status(404).json({error:error.message})
+    }
+},
+
+seller:async(req,res,next)=>{
+    try {
+        if(userData.role==='seller')
+        next()
         else
-        return res.status(400).json({error:'Invalid Token'})
+        return res.status(401).json({error:'not a seller'})
+    } catch (error) {
+       res.status(404).json({error:error.message}) 
     }
+},
+
+
+modifyProduct:async(req,res,next)=>{
+    try {
+        prodData=await Product.findById(req.params.id)
+        if(prodData.sellerEmail===userData.email)
+        next()
+        else
+        return res.status(401).json({error:'invalid seller'})
+    } catch (error) {
+        res.status(404).json({error:error.message})
     }
-    catch(error)
-    {
-        return res.status(404).send({error:error.message})
+},
+
+
+admin:async(req,res,next)=>{
+    try {
+        if(userData.role==='admin')
+        next()
+        else
+        return res.status(401).json({error:'not an admin'})
+    } catch (error) {
+       res.status(404).json({error:error.message}) 
     }
-    next()
 }
-module.exports={authentication,authorization}
+
+}
+
+module.exports=authentication

@@ -23,7 +23,7 @@ const userLogin=async(req,res)=>{
     try {
             const userData=await User.findOne({email:req.body.email})
             if(!userData)
-            res.status(400).json({error:'User not found'})
+            return res.status(400).json({error:'User not found'})
             const validPassword=await bcrypt.compare(req.body.password,userData.password)
             if(!userData || !validPassword || userData.role!=req.body.role)
             res.status(400).json({error:'Invalid credentials'})

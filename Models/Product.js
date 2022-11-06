@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const bcrypt=require('bcrypt')
+const validator=require('validator')
 const prodSchema=new mongoose.Schema({
     prodId:{
         type:Number,
@@ -38,17 +38,17 @@ const prodSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    password:{
+    sellerEmail:{
         type:String,
-        required:true
+        required:true,
+        unique:[true,'email-id exists'],
+        lowercase:true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error('Invalid Email-Id')
+            }
+        }
     }
 },{timestamps:true})
-prodSchema.pre('save',async function(next){
-    if(this.isModified('password'))
-    {
-        this.password=await bcrypt.hash(this.password,9)
-    }
-    next()
-})
 const Product=mongoose.model('Product',prodSchema)
 module.exports=Product

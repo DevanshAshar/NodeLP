@@ -1,9 +1,6 @@
 const express=require('express')
 const router=new express.Router()
-const{
-    authentication,
-    authorization
-}=require('../Middleware/auth')
+const authentication=require('../Middleware/auth')
 const {
     newUser,
     userLogin,
@@ -16,10 +13,10 @@ const {
 }=require('../Controllers/User');
 router.post('/newUser',newUser)
 router.post('/userLogin',userLogin)
-router.get('/users',authorization,users)
-router.get('/customers',authorization,customers)
-router.get('/sellers',authorization,sellers)
-router.get('/:id',authentication,username)
-router.patch('/:id',authentication,updateUser)
-router.delete('/:id',authentication,deleteUser)
+router.get('/users',[authentication.verifyToken,authentication.admin],users)
+router.get('/customers',[authentication.verifyToken,authentication.admin],customers)
+router.get('/sellers',[authentication.verifyToken,authentication.admin],sellers)
+router.get('/:id',[authentication.verifyToken,authentication.verifyUser],username)
+router.patch('/:id',[authentication.verifyToken,authentication.verifyUser],updateUser)
+router.delete('/:id',[authentication.verifyToken,authentication.verifyUser],deleteUser)
 module.exports=router
