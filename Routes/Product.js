@@ -1,9 +1,10 @@
 const express=require('express')
 const router=new express.Router()
-const authentication=require('../Middleware/prodAuth')
+const {authentication,authorization}=require('../Middleware/prodAuth')
 const {
     newProduct,
     sellerLogin,
+    sellerCreateProd,
     products,
     seller,
     prodname,
@@ -12,7 +13,8 @@ const {
     updateProd,
     deleteProd
 }=require('../Controllers/Product')
-router.post('/newProduct',newProduct)
+router.post('/newProduct',authorization,newProduct)
+router.post('/sellerCreateProd',sellerCreateProd)
 router.post('/sellerLogin',sellerLogin)
 router.get('/products',products)
 router.get('/seller/:seller',seller)

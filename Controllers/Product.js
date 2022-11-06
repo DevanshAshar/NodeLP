@@ -3,11 +3,16 @@ const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 const app=express()
 const Product=require('../Models/Product')
+const User = require('../Models/User')
 app.use(express.json())
 const newProduct=async(req,res)=>{
     const {prodId,prodName, brand, model, price, category, specs,image,seller,password}=req.body;
     if(!prodId || !prodName || !brand || !model|| !price || !category|| !specs || !image || !seller || !password)
     return res.status(400).json({error:"Please fill the necessary details "})
+    const sellerData=await User.findOne({username:seller})
+    const validPassword=await bcrypt.compare(req.body.password,sellerData.password)
+    if(!validPassword)
+    return res.status(400).send({error:'Invalid credentials'})
     const prod=new Product(req.body) 
     try {
         await prod.save()
@@ -34,6 +39,27 @@ const sellerLogin=async(req,res)=>{
             }
     } catch (error) {
         res.status(404).send(error.message)
+    }
+}
+const sellerCreateProd=async(req,res)=>{
+    const {seller,password}=req.body
+    if(!seller || !password)
+    return res.status(401).json({error:'Pleaze fill the details'})
+    try{
+        const userData=await User.findOne({username:req.body.seller})
+        if(!userData)
+        return res.status(401).json({error:'Seller not registered'})
+        const validPassword=await bcrypt.compare(req.body.password,userData.password) 
+        if(!validPassword || userData.username!=req.body.seller)
+            res.status(400).json({error:'Invalid credentials'})
+            else
+            {
+               const token=jwt.sign({seller:req.body.seller,role:userData.role},process.env.SecretKey)
+                return res.status(200).json({token:token,userData})
+            }
+    }catch(error)
+    {   
+        return res.status(404).json({error:error.message})
     }
 }
 const products=async(req,res)=>{
@@ -101,6 +127,7 @@ const deleteProd=async(req,res)=>{
 module.exports={
     newProduct,
     sellerLogin,
+    sellerCreateProd,
     products,
     seller,
     prodname,
