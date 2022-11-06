@@ -29,7 +29,7 @@ const userLogin=async(req,res)=>{
             res.status(400).json({error:'Invalid credentials'})
             else
             {
-               const token=jwt.sign({email:req.body.email},process.env.SecretKey)
+               const token=jwt.sign({email:req.body.email},process.env.SecretKey,{expiresIn:'1d'})
                 return res.status(200).json({token:token,userData})
             }
     } catch (error) {
