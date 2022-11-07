@@ -50,7 +50,7 @@ const userSchema=new mongoose.Schema({
 },{timestamps:true})
 
 userSchema.post('save',function(doc,next){
-    console.log("new User created",doc)
+    console.log('new User created',doc)
     next()
 })
 
