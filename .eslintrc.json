@@ -5,6 +5,7 @@
         "prettier/prettier":"error",
         "no-unused-vars":"warn",
         "no-console":"off",
-        "no-process-exit":"error"
+        "no-process-exit":"error",
+        "func-names":"off"
     }
 }
