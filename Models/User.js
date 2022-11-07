@@ -2,6 +2,7 @@ const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
 const validator=require('validator')
 const bcrypt=require('bcrypt')
+
 const userSchema=new mongoose.Schema({
     username:{
         type:String,
@@ -48,6 +49,11 @@ const userSchema=new mongoose.Schema({
     ]
 },{timestamps:true})
 
+userSchema.post('save',function(doc,next){
+    console.log("new User created",doc)
+    next()
+})
+
 userSchema.pre('save',async function(next){
     if(this.isModified('password'))
     {
@@ -55,5 +61,6 @@ userSchema.pre('save',async function(next){
     }
     next()
 })
+
 const User=mongoose.model('User',userSchema)
 module.exports=User
