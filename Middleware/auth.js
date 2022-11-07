@@ -18,10 +18,9 @@ const authentication={
         {
             try {
                 const data=jwt.verify(token,process.env.SecretKey)
-                const user=await User.findOne({email:data.email})
+                const user=await User.findOne({email:data.email,token:token})
                 if(!user)
                 return res.status(401).json({error:'Unauthorized'})
-                
                 userData=user
                 next()
             } catch (error) {

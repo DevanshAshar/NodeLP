@@ -30,6 +30,8 @@ const userLogin=async(req,res)=>{
             else
             {
                const token=jwt.sign({email:req.body.email},process.env.SecretKey,{expiresIn:'1d'})
+               userData.tokens=userData.tokens.concat({token})
+               await userData.save()
                 return res.status(200).json({token:token,userData})
             }
     } catch (error) {
