@@ -1,5 +1,4 @@
 \node_modules
-*.mongodb
-\.env
+config.env
 \Screenshots
 *.png

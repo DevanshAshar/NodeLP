@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const Product = require('../Models/Product')
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config({path:"./config.env"})
 const User = require('../Models/User')
 const authentication={
 
