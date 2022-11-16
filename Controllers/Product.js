@@ -3,7 +3,12 @@ const jwt=require('jsonwebtoken')
 const app=express()
 const Product=require('../Models/Product')
 const User = require('../Models/User')
+const multer=require('multer')
+const fs=require('fs')
+var upload=multer({dest:'uploads/'})
+var cartProd=[]
 app.use(express.json())
+
 const newProduct=async(req,res)=>{
     const {prodId,prodName, brand, model, price, category, specs,image,seller,sellerEmail}=req.body;
     if(!prodId || !prodName || !brand || !model|| !price || !category|| !specs || !image || !seller || !sellerEmail)
@@ -27,6 +32,7 @@ const products=async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
+
 const seller=async(req,res)=>{
     try {
         let data=await Product.find({seller:req.params.seller})
@@ -81,6 +87,42 @@ const deleteProd=async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
+const productImage=async(req,res)=>{
+    try {
+        let prod=await Product.findById(req.params.id);
+        prod.Image=req.file
+        prod=await prod.save()
+        res.status(200).json({message:'File Uploaded',prod})
+      } catch (error) {
+        res.status(400).json({error:'Error'});
+      }
+}
+const storage=multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'./upload')
+    },
+    filename:function(req,file,cb){
+        cb(null,file.originalname)
+    }
+})
+var upload=multer({storage:storage})
+const prodNo=async(req,res)=>{
+    try{
+        const data=await User.findById(req.params.id)
+    }catch(error){
+        res.status(400).json({error:'Error'})
+    }
+
+}
+const cart=async(req,res)=>{
+    const prod=await Product.findById(req.params.id)
+    var addCart=[
+        {
+            prodName:prod.prodName,
+            prodId:prod.prodId,
+        },
+    ]    
+}
 module.exports={
     newProduct,
     products,
@@ -89,5 +131,8 @@ module.exports={
     brand,
     category,
     updateProd,
+    productImage,
+    prodNo,
+    cart,
     deleteProd
 }

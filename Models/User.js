@@ -39,6 +39,9 @@ const userSchema=new mongoose.Schema({
         required:true,
         enum:['customer','seller','admin']
     },
+    image:{
+        type:String,
+    },
     tokens:[
         {
             token:{

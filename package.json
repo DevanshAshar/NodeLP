@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cloudinary": "^1.32.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.27.0",
     "eslint-config-node": "^4.1.0",
@@ -21,10 +22,12 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "express": "^4.18.2",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.5",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "prettier": "^2.7.1",
     "validator": "^13.7.0"
   }

@@ -1,9 +1,9 @@
 const express=require('express')
 const morgan=require('morgan')
-const user=require('../E-Commerce/Routes/User')
-const prod=require('../E-Commerce/Routes/Product')
+const user=require('./Routes/User')
+const prod=require('./Routes/Product')
 const app=express()
-require('../E-Commerce/dbConnect')
+require('./dbConnect')
 app.use(express.json())
 app.use(morgan('dev'))
 app.use('/user',user)
@@ -14,4 +14,4 @@ app.use((req,res,next)=>{
         error:'not found'
     })
 })
-app.listen(5000)
+app.listen(3000)
