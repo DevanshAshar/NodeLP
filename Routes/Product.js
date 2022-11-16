@@ -13,7 +13,6 @@ const {
     updateProd,
     deleteProd,
     prodNo,
-    cart,
     productImage,
 }=require('../Controllers/Product')
 router.post('/newProduct',[authentication.verifyToken,authentication.seller],newProduct)
@@ -26,6 +25,7 @@ router.patch('/:id',[authentication.verifyToken,authentication.modifyProduct],up
 router.delete('/:id',[authentication.verifyToken,authentication.modifyProduct],deleteProd)
 router.post('/images/:id',upload.array('product'),[authentication.verifyToken],productImage)
 router.get('/sellerProd/:id',[authentication.verifyToken],prodNo)
-router.post('/cart/:id',[authentication.verifyToken],cart)
+const cart=require('../Controllers/Cart')
+router.post('/cart',[authentication.verifyToken],cart)
 
 module.exports=router

@@ -49,7 +49,9 @@ const userSchema=new mongoose.Schema({
                 required:true
             }
         }
-    ]
+    ],
+    cart:{  
+    }
 },{timestamps:true})
 
 userSchema.post('save',function(doc,next){
