@@ -13,6 +13,7 @@ const {
     updateUser,
     logout,
     deleteUser,
+    sellerProd,
     profilePic
 }=require('../Controllers/User');
 router.post('/newUser',newUser)
@@ -25,4 +26,5 @@ router.patch('/:id',[authentication.verifyToken,authentication.verifyUser],updat
 router.delete('/:id',[authentication.verifyToken,authentication.verifyUser],deleteUser)
 router.post('/logout',[authentication.verifyToken],logout)
 router.post('/profile',upload.single('profile'),[authentication.verifyToken],profilePic)
+router.post('/sellerProd',[authentication.verifyToken],sellerProd)
 module.exports=router

@@ -1,23 +1,59 @@
 const Product=require('../Models/Product')
 const User=require('../Models/User')
 
-const cart=async(req,res)=>{
-    const prodName=req.body
+const addCart=async(req,res)=>{
+    const prodName=req.body   
     const prod=await Product.findOne(prodName)
-    console.log(prod.prodName)
     const user=userData
     if(!prod)
     res.status(400).json({message:'Item not found'})
     try{
         await User.findByIdAndUpdate(userData._id,{
-            cart:{
-                prodName:prod.prodName
+            $addToSet:{
+                cart:{
+                    prodName:prod.prodName,
+                    price:prod.price,
+                    image:prod.image,
+                    quantity:req.params.id
+                }
             }
+            
         })
-        await user.save()
         res.status(200).json({message:'Added to cart'})
     }catch(error){
         res.status(400).json({error:'Error'})
     }
 }
-module.exports=cart
+const delCart=async(req,res)=>{
+    const prodName=req.body
+    const prod=await Product.findOne(prodName)
+    const user=userData
+        if((req.params.id)>(userData.cart.quantity)){
+            res.status(400).json({message:'Not enough in the cart'})
+        }
+        else{
+            var n=(userData.cart.quantity)-(req.params.id)
+            if(n===0){
+                 User.findByIdAndUpdate(userData._id,{
+                   
+                        cart:{
+                        }
+                    
+                })
+                res.status(200).json({message:'Cart Updated'})
+            }
+            else{
+                 User.findByIdAndUpdate(userData._id,{
+                    cart:{
+                        prodName:prod.prodName,
+                        price:prod.price,
+                        image:prod.image,
+                        quantity:n
+                    }
+                })
+                res.status(200).json({message:'Cart Updated'})
+            }
+        }
+}
+module.exports=addCart
+module.exports=delCart

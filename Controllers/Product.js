@@ -90,7 +90,9 @@ const deleteProd=async(req,res)=>{
 const productImage=async(req,res)=>{
     try {
         let prod=await Product.findById(req.params.id);
-        prod.Image=req.file
+        console.log(req.files)
+        prod.image=req.files
+        console.log(prod.image)
         prod=await prod.save()
         res.status(200).json({message:'File Uploaded',prod})
       } catch (error) {
@@ -106,23 +108,19 @@ const storage=multer.diskStorage({
     }
 })
 var upload=multer({storage:storage})
-const prodNo=async(req,res)=>{
+
+const productCmp=async(req,res)=>{
     try{
-        const data=await User.findById(req.params.id)
+        const {product1,product2}=req.body
+        prod1=await Product.findById(req.body.product1)
+        prod2=await Product.findById(req.body.product2)
+        res.status(200).json({prod1,prod2})
     }catch(error){
         res.status(400).json({error:'Error'})
     }
+}
 
-}
-const cart=async(req,res)=>{
-    const prod=await Product.findById(req.params.id)
-    var addCart=[
-        {
-            prodName:prod.prodName,
-            prodId:prod.prodId,
-        },
-    ]    
-}
+
 module.exports={
     newProduct,
     products,
@@ -132,7 +130,6 @@ module.exports={
     category,
     updateProd,
     productImage,
-    prodNo,
-    cart,
-    deleteProd
+    deleteProd,
+    productCmp
 }
