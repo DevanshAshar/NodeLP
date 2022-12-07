@@ -31,7 +31,7 @@ const prodSchema=new mongoose.Schema({
         required:true
     },
     image:{
-        type:String,
+        type:Buffer,
         required:true
     },
     seller:{
@@ -48,6 +48,13 @@ const prodSchema=new mongoose.Schema({
                 throw new Error('Invalid Email-Id')
             }
         }
+    },
+    quantity:{
+        type:Number
+    },
+    rating:{
+        type:Number,
+        maxlength:[5]
     }
 },{timestamps:true})
 const Product=mongoose.model('Product',prodSchema)

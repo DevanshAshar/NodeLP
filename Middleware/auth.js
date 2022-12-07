@@ -40,6 +40,7 @@ verifyUser:async(req,res,next)=>{
         const user=await User.findById(req.params.id)
         if(user.email===userData.email)
         next()
+        
         else
         return res.status(401).json({error:'invalid user'})
     } catch (error) {

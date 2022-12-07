@@ -1,8 +1,20 @@
 const express=require('express')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
+const dotenv=require('dotenv')
+dotenv.config()
 const app=express()
 const User=require('../Models/User')
+const nodemailer=require('nodemailer')
+const multer=require('multer')
+const Product = require('../Models/Product')
+var upload=multer({dest:'uploads/'})
+const cloudinary=require('cloudinary').v2
+cloudinary.config({
+    cloud_name:process.env.CLOUDINARY_NAME,
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_API_SECRET
+})
 app.use(express.json()) 
 const newUser=async(req,res)=>{
     const {username, password, email, address, mobile, role}=req.body;
@@ -11,6 +23,26 @@ const newUser=async(req,res)=>{
     const user=new User(req.body)
     try {
         await user.save()
+        var transporter=nodemailer.createTransport({
+            service:'gmail',
+            auth:{
+                user:'abc@gmail.com',
+                pass:'abc123'
+            }
+        })
+        var mailOptions={
+            from:'abc@gmail.com',
+            to:req.body.email,
+            subject:'Succesfully Registered',
+            text:'Your account has been created successfully , Enjoy shopping !!!'
+        }
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
         res.json({message:'Success'}).status(200)
     } catch (error) {
         res.status(500).json({message:error.message}) 
@@ -30,10 +62,21 @@ const userLogin=async(req,res)=>{
             else
             {
                const token=jwt.sign({email:req.body.email},process.env.SecretKey,{expiresIn:'1d'})
+               let oldTokens=User.tokens || []
+               if(oldTokens.length){
+                oldTokens=oldTokens.filter(t=>{
+                    timeDiff=(Date.now()-parseInt(t.signedAt))/1000
+                    if(timeDiff<86400){
+                        return t
+                    }
+                })
+               }
+               await User.findByIdAndUpdate(userData._id,{tokens:[...oldTokens,{token,signedAt: Date.now().toString()}]})
                userData.tokens=userData.tokens.concat({token})
                await userData.save()
                 return res.status(200).json({token:token,userData})
             }
+
     } catch (error) {
         res.status(404).send(error.message)
     } 
@@ -93,6 +136,53 @@ const deleteUser=async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
+const logout=async(req,res)=>{
+    try{
+        if(req.headers){
+            const token=req.headers   
+            if(!token){
+                res.status(400).json({message: 'Auth failed'})
+            }
+            else{
+                const tokens=userData.tokens
+                await User.findByIdAndUpdate(userData._id,{tokens:[]})
+                res.status(200).json({message:'Successfully logged out'})
+            }
+        }
+    }catch(error){
+        res.status(400).json({error:'Error'})
+    }
+}
+
+const profilePic=async(req,res)=>{
+
+    const profile=await cloudinary.uploader.upload(req.file.path)
+    try{
+        await User.findByIdAndUpdate(userData._id,{image:profile.url})
+        res.send(req.file)
+    }catch(err){
+        res.status(400).json({error:'Error'})
+    }
+}
+
+const storage=multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'./upload')
+    },
+    filename:function(req,file,cb){
+        cb(null,file.originalname)
+    }
+})
+var upload=multer({storage:storage})
+
+const sellerProd=async(req,res)=>{
+    try{
+        const products=await Product.find({sellerEmail:userData.email})
+        res.status(200).json(products)
+    }catch(error){
+        res.status(400).json({error:'Error'})
+    }
+}
 module.exports={
     newUser,
     userLogin,
@@ -101,5 +191,8 @@ module.exports={
     sellers,
     username,
     updateUser,
+    profilePic,
+    logout,
+    sellerProd,
     deleteUser
 }
