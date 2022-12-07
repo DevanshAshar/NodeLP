@@ -25,9 +25,6 @@ router.patch('/:id',[authentication.verifyToken,authentication.modifyProduct],up
 router.delete('/:id',[authentication.verifyToken,authentication.modifyProduct],deleteProd)
 router.post('/images/:id',upload.array('product'),[authentication.verifyToken],productImage)
 router.post('/compare',[authentication.verifyToken],productCmp)
-// const cart=require('../Controllers/Cart')
-// router.post('/addCart/:id',[authentication.verifyToken],[cart.addCart])
-// router.post('/delCart/:id',[authentication.verifyToken],[cart.delCart])
 const {
     addCart,
     delCart
