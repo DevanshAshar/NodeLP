@@ -18,16 +18,18 @@ const order=async(req,res)=>{
         var transporter=nodemailer.createTransport({
             service:'gmail',
             auth:{
-                user:'abc@gmail.com',
-                pass:'abc123'
+                user:process.env.email,
+                pass:process.env.pass
             }
         })
         var mailOptions={
-            from:'abc@gmail.com',
+            from:process.env.email,
             to:userData.email,
             subject:' Order has been placed',
             //order details 
-            text:JSON.stringify(o)
+            text:'Thank you for Ordering',
+            text:prodName,
+            text:o.address
         }
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
@@ -36,7 +38,7 @@ const order=async(req,res)=>{
               console.log('Email sent: ' + info.response);
             }
           });
-        res.status(200).json(o)
+        res.status(200).json({message:'Order has been placed'})
     }catch(error){
         res.status(400).json({error:'Error'})
     }
