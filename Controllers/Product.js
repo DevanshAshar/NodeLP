@@ -10,8 +10,8 @@ var cartProd=[]
 app.use(express.json())
 
 const newProduct=async(req,res)=>{
-    const {prodId,prodName, brand, model, price, category, specs,image,seller,sellerEmail}=req.body;
-    if(!prodId || !prodName || !brand || !model|| !price || !category|| !specs || !image || !seller || !sellerEmail)
+    const {prodId,prodName, brand, model, price, category, specs,seller,sellerEmail}=req.body;
+    if(!prodId || !prodName || !brand || !model|| !price || !category|| !specs || !seller || !sellerEmail)
     return res.status(400).json({error:"Please fill the necessary details "})
     const sellerData=await User.findOne({email:sellerEmail})
     if(!sellerData)

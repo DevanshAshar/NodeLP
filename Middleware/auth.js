@@ -17,7 +17,7 @@ const authentication={
         if(token)
         {
             try {
-                const data=jwt.verify(token,process.env.SecretKey)
+                const data=jwt.verify(token,"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")
                 const user=await User.findOne({email:data.email,token:token})
                 if(!user)
                 return res.status(401).json({error:'Unauthorized'})

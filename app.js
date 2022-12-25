@@ -14,4 +14,5 @@ app.use((req,res,next)=>{
         error:'not found'
     })
 })
-app.listen(3000)
+module.exports=app
+app.listen(5000)

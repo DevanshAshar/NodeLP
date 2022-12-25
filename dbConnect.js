@@ -1,11 +1,9 @@
 const mongoose=require('mongoose')
-const dotenv=require('dotenv')
-// dotenv.config({path:"./config.env"})
-dotenv.config()
-const db=process.env.Url;
+const dotenv=require('dotenv').config()
+const db="mongodb+srv://devanshAshar:devanshNode@cluster0.dedofov.mongodb.net/E-Comm?retryWrites=true&w=majority"
 mongoose.connect(db,{
     useNewUrlParser:true,
-    //useCreateIndex:true,
+   // useCreateIndex:true,
     useUnifiedTopology:true,
     //useFindAndModify:false
 }).then(()=>{

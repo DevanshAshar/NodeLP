@@ -2,10 +2,10 @@ const Product=require('../Models/Product')
 const User=require('../Models/User')
 
 const addCart=async(req,res)=>{
-    const prodName=req.body   
-    const prod=await Product.findOne(prodName)
+    const {prodName,Quantity}=req.body   
+    const prod=await Product.findOne({prodName:req.body.prodName})
     const user=userData
-    console.log(user)
+    //console.log(user)
     if(!prod)
     res.status(400).json({message:'Item not found'})
     try{
@@ -15,7 +15,7 @@ const addCart=async(req,res)=>{
                     prodName:prod.prodName,
                     price:prod.price,
                     image:prod.image,
-                    quantity:req.params.id
+                    quantity:req.body.Quantity
                 }
             }
             
@@ -28,9 +28,9 @@ const addCart=async(req,res)=>{
 }
 const delCart=async(req,res)=>{
     const prodName=req.body
-    const prod=await Product.findOne(prodName)
+    const prod=await Product.findOne({prodName:req.body.prodName})
     const user=userData
-        if((req.params.id)>(userData.cart.quantity)){
+        if((req.params.id)>(userData.cart[0].quantity)){
             res.status(400).json({message:'Not enough in the cart'})
         }
             var n=(userData.cart.quantity)-(req.params.id)

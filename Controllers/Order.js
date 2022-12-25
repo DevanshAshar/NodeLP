@@ -15,15 +15,15 @@ const order=async(req,res)=>{
             cost:prod.price*parseInt(quantity),
             quantity:quantity
         })
-        var transporter=nodemailer.createTransport({
+        var transporter=nodemailer.createTransport({    
             service:'gmail',
             auth:{
-                user:process.env.email,
-                pass:process.env.pass
+                user:'try.user99@gmail.com',
+                pass:'dummy$123'
             }
         })
         var mailOptions={
-            from:process.env.email,
+            from:'try.user99@gmail.com',
             to:userData.email,
             subject:' Order has been placed',
             //order details 

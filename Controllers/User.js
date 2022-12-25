@@ -7,13 +7,14 @@ const app=express()
 const User=require('../Models/User')
 const nodemailer=require('nodemailer')
 const multer=require('multer')
+const SecretKey="QWERTYUIOPASDFGHJKLZXCVBNM1234567890"
 const Product = require('../Models/Product')
 var upload=multer({dest:'uploads/'})
 const cloudinary=require('cloudinary').v2
 cloudinary.config({
-    cloud_name:process.env.CLOUDINARY_NAME,
-    api_key:process.env.CLOUDINARY_API_KEY,
-    api_secret:process.env.CLOUDINARY_API_SECRET
+    cloud_name:"dpfxl2odl",
+    api_key:"477525826251791",
+    api_secret:"_zp9D4i_GJNc5QNjMob8OcKP2w4"
 })
 app.use(express.json()) 
 const newUser=async(req,res)=>{
@@ -26,12 +27,12 @@ const newUser=async(req,res)=>{
         var transporter=nodemailer.createTransport({
             service:'gmail',
             auth:{
-                user:'abc@gmail.com',
-                pass:'abc123'
+                user:'try.user99@gmail.com',
+                pass:'zrzoezntywioiuea'
             }
         })
         var mailOptions={
-            from:'abc@gmail.com',
+            from:'try.user99@gmail.com',
             to:req.body.email,
             subject:'Succesfully Registered',
             text:'Your account has been created successfully , Enjoy shopping !!!'
@@ -40,7 +41,7 @@ const newUser=async(req,res)=>{
             if (error) {
               console.log(error);
             } else {
-              console.log('Email sent: ' + info.response);
+             // console.log('Email sent: ' + info.response);
             }
           });
         res.json({message:'Success'}).status(200)
@@ -61,7 +62,7 @@ const userLogin=async(req,res)=>{
             res.status(400).json({error:'Invalid credentials'})
             else
             {
-               const token=jwt.sign({email:req.body.email},process.env.SecretKey,{expiresIn:'1d'})
+               const token=jwt.sign({email:req.body.email},SecretKey,{expiresIn:'1d'})
                let oldTokens=User.tokens || []
                if(oldTokens.length){
                 oldTokens=oldTokens.filter(t=>{

@@ -30,7 +30,7 @@ const {
     delCart
 }=require('../Controllers/Cart')
 router.post('/addCart',[authentication.verifyToken],addCart)
-router.post('/delCart',[authentication.verifyToken],delCart)
+router.post('/delCart/:id',[authentication.verifyToken],delCart)
 const order=require('../Controllers/Order')
 router.post('/order',[authentication.verifyToken],order)
 
