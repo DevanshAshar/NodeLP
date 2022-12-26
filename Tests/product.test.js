@@ -32,8 +32,8 @@ const testProduct1={
 async()=>{
     await Product.deleteMany({})
     await User.deleteMany({})
-    await Product(testProduct1).save()
     await User(testUser1).save()
+    await Product(testProduct1).save()
 }
 test('new product',async()=>{
     await request(app).post('/product/newProduct')

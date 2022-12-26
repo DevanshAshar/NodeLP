@@ -1,7 +1,8 @@
-/*const request=require('supertest')
+const request=require('supertest')
 const jwt=require('jsonwebtoken')
 const app=require('../app')
 const User=require('../Models/User')
+const Product=require('../Models/Product')
 const mongoose=require('mongoose')
 const testUser1={
         _id:new mongoose.Types.ObjectId(),
@@ -14,9 +15,36 @@ const testUser1={
         tokens:[{token:jwt.sign({email:'ashar.devansh+123@gmail.com'},"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")}]
 }
 const tkn=testUser1.tokens[0].token
+const testUser2={
+    _id:new mongoose.Types.ObjectId(),
+    username:'supertest2',
+    password:'supertest223',
+    email:'ashar.devansh+223@gmail.com',
+    address:'supertest address',
+    mobile:'9283749278',
+    role:'seller',
+    tokens:[{token:jwt.sign({email:'ashar.devansh+223@gmail.com'},"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")}]
+}
+const tkn2=testUser2.tokens[0].token
+const testProduct1={
+    _id:new mongoose.Types.ObjectId(),
+    prodId:345,
+    prodName:'IPhone14',
+    brand:'Apple',
+    model:'14',
+    price:100000,
+    category:'mobiles',
+    specs:'somespecs',
+    seller:'supertestseller',
+    sellerEmail:'ashar.devansh+223@gmail.com',
+    quantity:100000
+}
 beforeEach(async()=>{
     await User.deleteMany({})
+    await Product.deleteMany({})
     await User(testUser1).save()
+    await User(testUser2).save()
+    await Product(testProduct1).save()
 })
 test('signup test',async()=>{
     await request(app).post('/user/newUser')
@@ -78,8 +106,13 @@ test('logout',async()=>{
     .set('AuthenticateUser',`Bearer ${tkn}`)
     .expect(200)
 })
+test('seller prod',async()=>{
+    await request(app).post('/user/sellerProd')
+    .set('AuthenticateUser',`Bearer ${tkn2}`)
+    .expect(200)
+})
 test('delete user',async()=>{
     await request(app).delete(`/user/${testUser1._id}`)
     .set('AuthenticateUser',`Bearer ${tkn}`)
     .expect(200)
-})*/
+})

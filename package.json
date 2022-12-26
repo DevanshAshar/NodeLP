@@ -4,8 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
-    "coverage":"nyc --reporter=text npm test"
+    "test": "jest"
+  },
+  "jest":{
+    "collectCoverage":true
   },
   "repository": {
     "type": "git",
