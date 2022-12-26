@@ -6,18 +6,18 @@ const User=require('../Models/Product')
 const Order=require('../Models/Order')
 const mongoose=require('mongoose')
 const testUser1={
-    _id:"63a81fb78b1b129a80e29c1c",
+    _id:new mongoose.Types.ObjectId(),
     username:'supertestseller',
     password:'supertest123',
     email:'ashar.devansh+159@gmail.com',
     address:'supertest address',
     mobile:'7013749278',
     role:'seller',
-    tokens:[{token:jwt.sign({email:'ashar.devansh+123@gmail.com'},"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")}]
+    tokens:[{token:jwt.sign({email:'ashar.devansh+159@gmail.com'},"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")}]
 }
-const tkn="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGFyLmRldmFuc2grODlAZ21haWwuY29tIiwiaWF0IjoxNjcxOTYyNTYyLCJleHAiOjE2NzIwNDg5NjJ9.jfpy0kUvfKvEbE9P-jwjVnd2wujP3OrAUyckMTKLIbE"
+const tkn=testUser1.tokens[0].token
 const testProduct1={
-    _id:"63a8233968d34676286185bb",
+    _id:new mongoose.Types.ObjectId(),
     prodId:345,
     prodName:'IPhone14',
     brand:'Apple',
@@ -26,17 +26,28 @@ const testProduct1={
     category:'mobiles',
     specs:'somespecs',
     seller:'supertestseller',
-    sellerEmail:'ashar.devansh+159@gmail.com'
+    sellerEmail:'ashar.devansh+159@gmail.com',
+    quantity:100000
 }
-/*beforeEach(async()=>{
+async()=>{
     await Product.deleteMany({})
-    await Product(testProduct1).save
-    await User(testUser1).save
-})*/
+    await User.deleteMany({})
+    await Product(testProduct1).save()
+    await User(testUser1).save()
+}
 test('new product',async()=>{
     await request(app).post('/product/newProduct')
     .set('AuthenticateUser',`Bearer ${tkn}`)
-    .send(testProduct1)
+    .send({prodId:348,
+        prodName:'IPhone14+',
+        brand:'Apple',
+        model:'14+',
+        price:200000,
+        category:'mobiles',
+        specs:'somespecs',
+        seller:'supertestseller',
+        sellerEmail:'ashar.devansh+159@gmail.com',
+        quantity:100000})
     .expect(200)
     expect(testUser1.role).toEqual('seller')
 })
@@ -50,7 +61,7 @@ test('get sellers',async()=>{
     .expect(200)
 })
 test('particular product',async()=>{
-    await request(app).get(`product/${testProduct1._id}`)
+    await request(app).get(`/product/${testProduct1._id}`)
     .expect(200)
 })
 test('get categories',async()=>{
@@ -65,13 +76,6 @@ test('update product',async()=>{
     await request(app).patch(`/product/${testProduct1._id}`)
     .set('AuthenticateUser',`Bearer ${tkn}`)
     .send({price:150000})
-    .expect(200)
-    expect(testUser1.role).toEqual('seller')
-    expect(testProduct1.sellerEmail).toEqual(testUser1.email)
-})
-test('delete product',async()=>{
-    await request(app).delete(`/product/${testProduct1._id}`)
-    .set('AuthenticateUser',`Bearer ${tkn}`)
     .expect(200)
     expect(testUser1.role).toEqual('seller')
     expect(testProduct1.sellerEmail).toEqual(testUser1.email)
@@ -93,4 +97,11 @@ test('order',async()=>{
     .set('AuthenticateUser',`Bearer ${tkn}`)
     .send({prodName:'IPhone14','Quantity':1})
     .expect(200)
+})
+test('delete product',async()=>{
+    await request(app).delete(`/product/${testProduct1._id}`)
+    .set('AuthenticateUser',`Bearer ${tkn}`)
+    .expect(200)
+    expect(testUser1.role).toEqual('seller')
+    expect(testProduct1.sellerEmail).toEqual(testUser1.email)
 })
