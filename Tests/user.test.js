@@ -98,7 +98,7 @@ test('update user',async()=>{
 test('profile pic',async()=>{
     await request(app).post('/user/profile')
     .set('AuthenticateUser',`Bearer ${tkn}`)
-    .attach('image',("C:/Users/Devansh Ashar/OneDrive/Pictures/Saved Pictures/ViratKohliRCB.jpg"))
+    .attach('profile',("C:/Users/Devansh Ashar/OneDrive/Pictures/Saved Pictures/ViratKohliRCB.jpg"))
     .expect(200)
 })   
 test('logout',async()=>{

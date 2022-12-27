@@ -29,11 +29,25 @@ const testProduct1={
     sellerEmail:'ashar.devansh+159@gmail.com',
     quantity:100000
 }
+const testProduct2={
+    _id:new mongoose.Types.ObjectId(),
+    prodId:350,
+    prodName:'IPhone13',
+    brand:'Apple',
+    model:'13',
+    price:90000,
+    category:'mobiles',
+    specs:'somespecs',
+    seller:'supertestseller',
+    sellerEmail:'ashar.devansh+159@gmail.com',
+    quantity:100000
+}
 async()=>{
     await Product.deleteMany({})
     await User.deleteMany({})
     await User(testUser1).save()
     await Product(testProduct1).save()
+    await Product(testProduct2).save()
 }
 test('new product',async()=>{
     await request(app).post('/product/newProduct')
@@ -79,6 +93,18 @@ test('update product',async()=>{
     .expect(200)
     expect(testUser1.role).toEqual('seller')
     expect(testProduct1.sellerEmail).toEqual(testUser1.email)
+})
+test('prodImage',async()=>{
+    await request(app).post(`/product/images/${testProduct1._id}`)
+    .set('AuthenticateUser',`Bearer ${tkn}`)
+    .attach('profile',("C:/Users/Devansh Ashar/OneDrive/Pictures/Saved Pictures/ViratKohliRCB.jpg"))
+    .expect(200)
+})
+test('compareProd',async()=>{
+    await request(app).post('/product/compare')
+    .set('AuthenticateUser',`Bearer ${tkn}`)
+    .send({product1:testProduct1._id,product2:testProduct2._id})
+    .expect(200)
 })
 test('add cart',async()=>{
     await request(app).post('/product/addCart')

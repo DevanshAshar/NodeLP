@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1672066888688" clover="3.2.0">
-  <project timestamp="1672066888688" name="All files">
-    <metrics statements="372" coveredstatements="238" conditionals="83" coveredconditionals="35" methods="43" coveredmethods="22" elements="498" coveredelements="295" complexity="0" loc="372" ncloc="372" packages="5" files="12" classes="12"/>
+<coverage generated="1672144358018" clover="3.2.0">
+  <project timestamp="1672144358018" name="All files">
+    <metrics statements="372" coveredstatements="243" conditionals="83" coveredconditionals="36" methods="43" coveredmethods="24" elements="498" coveredelements="303" complexity="0" loc="372" ncloc="372" packages="5" files="12" classes="12"/>
     <package name="NodeLP">
       <metrics statements="21" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
       <file name="app.js" path="E:\Devansh\UNICODE\LP1\ElexCart\NodeLP\app.js">
@@ -33,7 +33,7 @@
       </file>
     </package>
     <package name="NodeLP.Controllers">
-      <metrics statements="239" coveredstatements="129" conditionals="61" coveredconditionals="24" methods="31" coveredmethods="14"/>
+      <metrics statements="239" coveredstatements="134" conditionals="61" coveredconditionals="25" methods="31" coveredmethods="16"/>
       <file name="Cart.js" path="E:\Devansh\UNICODE\LP1\ElexCart\NodeLP\Controllers\Cart.js">
         <metrics statements="26" coveredstatements="5" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
@@ -171,7 +171,7 @@
         <line num="124" count="2" type="stmt"/>
       </file>
       <file name="User.js" path="E:\Devansh\UNICODE\LP1\ElexCart\NodeLP\Controllers\User.js">
-        <metrics statements="112" coveredstatements="82" conditionals="36" coveredconditionals="23" methods="15" coveredmethods="10"/>
+        <metrics statements="112" coveredstatements="87" conditionals="36" coveredconditionals="24" methods="15" coveredmethods="12"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
@@ -197,7 +197,7 @@
         <line num="27" count="1" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
-        <line num="41" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="41" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="42" count="0" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
         <line num="49" count="0" type="stmt"/>
@@ -269,10 +269,10 @@
         <line num="150" count="1" type="stmt"/>
         <line num="154" count="0" type="stmt"/>
         <line num="158" count="2" type="stmt"/>
-        <line num="160" count="0" type="stmt"/>
-        <line num="161" count="0" type="stmt"/>
-        <line num="162" count="0" type="stmt"/>
-        <line num="163" count="0" type="stmt"/>
+        <line num="160" count="1" type="stmt"/>
+        <line num="161" count="1" type="stmt"/>
+        <line num="162" count="1" type="stmt"/>
+        <line num="163" count="1" type="stmt"/>
         <line num="165" count="0" type="stmt"/>
         <line num="169" count="2" type="stmt"/>
         <line num="171" count="0" type="stmt"/>
@@ -295,20 +295,20 @@
         <line num="3" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
-        <line num="8" count="15" type="stmt"/>
-        <line num="9" count="15" type="stmt"/>
-        <line num="10" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="17" type="stmt"/>
+        <line num="9" count="17" type="stmt"/>
+        <line num="10" count="17" type="cond" truecount="1" falsecount="1"/>
         <line num="11" count="0" type="stmt"/>
-        <line num="14" count="15" type="cond" truecount="1" falsecount="1"/>
-        <line num="15" count="15" type="stmt"/>
-        <line num="17" count="15" type="cond" truecount="1" falsecount="1"/>
-        <line num="19" count="15" type="stmt"/>
-        <line num="20" count="15" type="stmt"/>
-        <line num="21" count="15" type="stmt"/>
-        <line num="22" count="15" type="cond" truecount="2" falsecount="0"/>
-        <line num="23" count="7" type="stmt"/>
-        <line num="24" count="8" type="stmt"/>
-        <line num="25" count="8" type="stmt"/>
+        <line num="14" count="17" type="cond" truecount="1" falsecount="1"/>
+        <line num="15" count="17" type="stmt"/>
+        <line num="17" count="17" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="17" type="stmt"/>
+        <line num="20" count="17" type="stmt"/>
+        <line num="21" count="17" type="stmt"/>
+        <line num="22" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="8" type="stmt"/>
+        <line num="24" count="9" type="stmt"/>
+        <line num="25" count="9" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
         <line num="34" count="0" type="stmt"/>

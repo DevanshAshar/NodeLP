@@ -19,7 +19,7 @@ const order=async(req,res)=>{
             service:'gmail',
             auth:{
                 user:'try.user99@gmail.com',
-                pass:'dummy$123'
+                pass:'zrzoezntywioiuea'
             }
         })
         var mailOptions={
