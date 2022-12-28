@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.67% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>87/112</span>
+                <span class='fraction'>77/112</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">44.44% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>16/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">66.66% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>24/36</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/15</span>
+                <span class='fraction'>10/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.67% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>87/112</span>
+                <span class='fraction'>77/112</span>
             </div>
         
             
@@ -281,33 +281,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -478,34 +478,34 @@ cloudinary.config({
     api_secret:"_zp9D4i_GJNc5QNjMob8OcKP2w4"
 })
 app.use(express.json()) 
-const newUser=async(req,res)=&gt;{
-    const {username, password, email, address, mobile, role}=req.body;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(!username || !password || !email || !address || !mobile || !role)
+const newUser=<span class="fstat-no" title="function not covered" >as</span>ync(req,res)=&gt;{
+    const {username, password, email, address, mobile, role}=<span class="cstat-no" title="statement not covered" >req.body;</span>
+<span class="cstat-no" title="statement not covered" >    if(!username || !password || !email || !address || !mobile || !role)</span>
 <span class="cstat-no" title="statement not covered" >    return res.status(400).json({error:"Please fill the necessary details "})</span>
-    const user=new User(req.body)
-    try {
-        await user.save()
-        var transporter=nodemailer.createTransport({
+    const user=<span class="cstat-no" title="statement not covered" >new User(req.body)</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        await user.save()</span>
+        var transporter=<span class="cstat-no" title="statement not covered" >nodemailer.createTransport({</span>
             service:'gmail',
             auth:{
                 user:'try.user99@gmail.com',
                 pass:'zrzoezntywioiuea'
             }
         })
-        var mailOptions={
+        var mailOptions=<span class="cstat-no" title="statement not covered" >{</span>
             from:'try.user99@gmail.com',
             to:req.body.email,
             subject:'Succesfully Registered',
             text:'Your account has been created successfully , Enjoy shopping !!!'
         }
-        transporter.sendMail(mailOptions, function(error, info){
-            <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {
+<span class="cstat-no" title="statement not covered" >        transporter.sendMail(mailOptions, <span class="fstat-no" title="function not covered" >fu</span>nction(error, info){</span>
+<span class="cstat-no" title="statement not covered" >            if (error) {</span>
 <span class="cstat-no" title="statement not covered" >              console.log(error);</span>
             } else {
              // console.log('Email sent: ' + info.response);
             }
           });
-        res.json({message:'Success'}).status(200)
+<span class="cstat-no" title="statement not covered" >        res.json({message:'Success'}).status(200)</span>
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        res.status(500).json({message:error.message}) </span>
     }
@@ -664,7 +664,7 @@ module.exports={
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-27T12:32:37.826Z
+                at 2022-12-28T12:27:35.400Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

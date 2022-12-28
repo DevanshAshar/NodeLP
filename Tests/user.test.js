@@ -4,6 +4,7 @@ const app=require('../app')
 const User=require('../Models/User')
 const Product=require('../Models/Product')
 const mongoose=require('mongoose')
+const dbConnect=require('../dbConnect')
 const testUser1={
         _id:new mongoose.Types.ObjectId(),
         username:'supertest1',
@@ -96,6 +97,7 @@ test('update user',async()=>{
     .expect(200)
 })
 test('profile pic',async()=>{
+    jest.setTimeout(30000)
     await request(app).post('/user/profile')
     .set('AuthenticateUser',`Bearer ${tkn}`)
     .attach('profile',("C:/Users/Devansh Ashar/OneDrive/Pictures/Saved Pictures/ViratKohliRCB.jpg"))
