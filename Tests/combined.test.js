@@ -270,6 +270,12 @@ test('add cart',async()=>{
     .send({prodName:'IPhone14','Quantity':2})
     .expect(200)
 })
+test('delete cart',async()=>{
+    await request(app).post('/product/delCart/1')
+    .set('AuthenticateUser',`Bearer ${tkn3}`)
+    .send({prodName:'IPhone14'})
+    .expect(200)
+})
 test('order',async()=>{
     await request(app).post('/product/order')
     .set('AuthenticateUser',`Bearer ${tkn3}`)

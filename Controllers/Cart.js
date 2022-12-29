@@ -11,12 +11,14 @@ const addCart=async(req,res)=>{
     try{
         await User.findByIdAndUpdate(userData._id,{
             $addToSet:{
+                product:{
                 cart:{
                     prodName:prod.prodName,
                     price:prod.price,
                     image:prod.image,
                     quantity:req.body.Quantity
                 }
+            }
             }
             
         })
@@ -30,7 +32,7 @@ const delCart=async(req,res)=>{
     const prodName=req.body
     const prod=await Product.findOne({prodName:req.body.prodName})
     const user=userData
-        if((req.params.id)>(user.cart[0].quantity)){
+       /* if((req.params.id)>(user.cart[0].quantity)){
             res.status(400).json({message:'Not enough in the cart'})
         }
             var n=(userData.cart.quantity)-(req.params.id)
@@ -54,7 +56,10 @@ const delCart=async(req,res)=>{
                     }
                 })
                 res.status(200).json({message:'Cart Updated'})
-            }
+            }*/
+            user.cart=user.cart.filter((product)=>{
+                return product.product.prodId!==req.body.prodId;})
+                res.status(200).json({message:'removed from cart',user})
         }
 
 

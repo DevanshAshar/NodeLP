@@ -50,8 +50,14 @@ const userSchema=new mongoose.Schema({
             }
         }
     ],
-    cart:{  
-    }
+    cart:[{
+        product:{
+            prodName:{type:String},
+            price:{type:Number},
+            image:{type:Buffer},
+            quantity:{type:Number}
+        }
+}]
 },{timestamps:true})
 
 userSchema.post('save',function(doc,next){
