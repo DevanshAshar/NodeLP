@@ -30,12 +30,12 @@ const delCart=async(req,res)=>{
     const prodName=req.body
     const prod=await Product.findOne({prodName:req.body.prodName})
     const user=userData
-        if((req.params.id)>(userData.cart[0].quantity)){
+        if((req.params.id)>(user.cart[0].quantity)){
             res.status(400).json({message:'Not enough in the cart'})
         }
             var n=(userData.cart.quantity)-(req.params.id)
             if(n===0){
-                //when all items from the cart are deleted 
+                //when all items from the cart are deleted s
                  User.findByIdAndUpdate(userData._id,{
                    
                         cart:{

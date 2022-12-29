@@ -40,6 +40,19 @@ const testProduct1={
     sellerEmail:'ashar.devansh+223@gmail.com',
     quantity:100000
 }
+const loginDetails={
+    email:'ashar.devansh+223@gmail.com',
+    password:'supertest223',
+    role:'seller'
+}
+/*async function updateDb(){
+    await User.deleteMany({})
+    await Product.deleteMany({})
+    await User(testUser1).save()
+    await User(testUser2).save()
+    await Product(testProduct1).save()
+}
+updateDb()*/
 beforeEach(async()=>{
     await User.deleteMany({})
     await Product.deleteMany({})
@@ -60,23 +73,17 @@ test('signup test',async()=>{
 })
 test('login test',async()=>{
     await request(app).post('/user/userLogin')
-    .send({
-        email:'ashar.devansh+123@gmail.com',
-        password:'supertest123',
-        role:'admin'
-    }).expect(200)
+    .send(loginDetails).expect(200)
 })
 test('get users',async()=>{
         await request(app).get('/user/users')
         .set('AuthenticateUser',`Bearer ${tkn}`)
         .expect(200)
-        expect(testUser1.role).toEqual('admin')
     })
 test('get customers',async()=>{
         await request(app).get('/user/customers')
         .set('AuthenticateUser',`Bearer ${tkn}`)
         .expect(200)
-        expect(testUser1.role).toEqual('admin')
     })
 test('get sellers',async()=>{
         await request(app).get('/user/sellers')
@@ -97,7 +104,7 @@ test('update user',async()=>{
     .expect(200)
 })
 test('profile pic',async()=>{
-    jest.setTimeout(30000)
+    jest.setTimeout(50000)
     await request(app).post('/user/profile')
     .set('AuthenticateUser',`Bearer ${tkn}`)
     .attach('profile',("C:/Users/Devansh Ashar/OneDrive/Pictures/Saved Pictures/ViratKohliRCB.jpg"))

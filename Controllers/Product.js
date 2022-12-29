@@ -10,8 +10,8 @@ var cartProd=[]
 app.use(express.json())
 
 const newProduct=async(req,res)=>{
-    const {prodId,prodName, brand, model, price, category, specs,seller,sellerEmail}=req.body;
-    if(!prodId || !prodName || !brand || !model|| !price || !category|| !specs || !seller || !sellerEmail)
+    const {prodId,prodName, brand, model, price, category, specs,seller,sellerEmail,quantity}=req.body;
+    if(!prodId || !prodName || !brand || !model|| !price || !category|| !specs || !seller || !sellerEmail || !quantity)
     return res.status(400).json({error:"Please fill the necessary details "})
     const sellerData=await User.findOne({email:sellerEmail})
     if(!sellerData)
@@ -92,7 +92,7 @@ const productImage=async(req,res)=>{
         let prod=await Product.findById(req.params.id);
         console.log(req.files)
         prod.image=req.files
-        console.log(prod.image)
+        //console.log(prod.image)
         prod=await prod.save()
         res.status(200).json({message:'File Uploaded',prod})
       } catch (error) {
