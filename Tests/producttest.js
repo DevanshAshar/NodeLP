@@ -138,15 +138,26 @@ test('add cart',async()=>{
     .expect(200)
 })
 test('delete cart',async()=>{
-    await request(app).post('/product/delCart/1')
+    await request(app).post('/product/delCart')
     .set('AuthenticateUser',`Bearer ${tkn3}`)
     .send({prodName:'IPhone14'})
     .expect(200)
 })
-test('order',async()=>{
-    await request(app).post('/product/order')
+test('direct order',async()=>{
+    await request(app).post('/product/directOrder')
     .set('AuthenticateUser',`Bearer ${tkn3}`)
     .send({prodName:'IPhone14','Quantity':1})
+    .expect(200)
+})
+test('add cart for Order',async()=>{
+    await request(app).post('/product/addCart')
+    .set('AuthenticateUser',`Bearer ${tkn3}`)
+    .send({prodName:'IPhone14','Quantity':2})
+    .expect(200)
+})
+test('cart order',async()=>{
+    await request(app).post('/product/cartOrder')
+    .set('AuthenticateUser',`Bearer ${tkn3}`)
     .expect(200)
 })
 test('delete product',async()=>{

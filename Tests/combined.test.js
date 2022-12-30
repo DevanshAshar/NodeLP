@@ -27,6 +27,17 @@ const testUser2={
     tokens:[{token:jwt.sign({email:'ashar.devansh+223@gmail.com'},"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")}]
 }
 const tkn2=testUser2.tokens[0].token
+const testUser5={
+    _id:new mongoose.Types.ObjectId(),
+    username:'supertest5',
+    password:'supertest523',
+    email:'ashar.devansh+523@gmail.com',
+    address:'supertest address',
+    mobile:'9283749275',
+    role:'seller',
+    tokens:[{token:jwt.sign({email:'ashar.devansh+523@gmail.com'},"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")}]
+}
+const tkn5=testUser5.tokens[0].token
 const testProduct1={
     _id:new mongoose.Types.ObjectId(),
     prodId:345,
@@ -50,11 +61,8 @@ async function updateDb(){
     await Product.deleteMany({})
     await User(testUser1).save()
     await User(testUser2).save()
-    //await User(testUser3).save()
-    //await User(testUser4).save()
+    await User(testUser5).save()
     await Product(testProduct1).save()
-    //await Product(testProduct3).save()
-    //await Product(testProduct4).save()
 }
 //updateDb()
 async function timing(){
@@ -128,7 +136,12 @@ test('profile pic',async()=>{
 })   
 test('logout',async()=>{
     await request(app).post('/user/logout')
-    .set('AuthenticateUser',`Bearer ${tkn}`)
+    .set('AuthenticateUser',`Bearer ${tkn2}`)
+    .expect(200)
+})
+test('logoutAll',async()=>{
+    await request(app).post('/user/logoutAll')
+    .set('AuthenticateUser',`Bearer ${tkn5}`)
     .expect(200)
 })
 test('seller prod',async()=>{
@@ -271,15 +284,26 @@ test('add cart',async()=>{
     .expect(200)
 })
 test('delete cart',async()=>{
-    await request(app).post('/product/delCart/1')
+    await request(app).post('/product/delCart')
     .set('AuthenticateUser',`Bearer ${tkn3}`)
     .send({prodName:'IPhone14'})
     .expect(200)
 })
-test('order',async()=>{
-    await request(app).post('/product/order')
+test('direct order',async()=>{
+    await request(app).post('/product/directOrder')
     .set('AuthenticateUser',`Bearer ${tkn3}`)
     .send({prodName:'IPhone14','Quantity':1})
+    .expect(200)
+})
+test('add cart for Order',async()=>{
+    await request(app).post('/product/addCart')
+    .set('AuthenticateUser',`Bearer ${tkn3}`)
+    .send({prodName:'IPhone14','Quantity':2})
+    .expect(200)
+})
+test('cart order',async()=>{
+    await request(app).post('/product/cartOrder')
+    .set('AuthenticateUser',`Bearer ${tkn3}`)
     .expect(200)
 })
 test('delete product',async()=>{

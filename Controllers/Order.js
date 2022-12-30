@@ -10,16 +10,16 @@ let mailTransporter=nodemailer.createTransport({
   }
 })
 const directOrder=async(req,res)=>{
-    const {prodId,Quantity}=req.body
+    const {prodName,Quantity}=req.body
     try {
         const user=userData
-        const prod=await Product.findById(prodId)
-        if(req.body.Quantity>prod.Quantity)
+        const prod=await Product.findOne({prodName:req.body.prodName})
+        if(req.body.Quantity>prod.quantity)
         return res.status(200).json({message:'Product sold out!!!'})
 
        const price=prod.price*(Number(req.body.Quantity))
         const order=new Order({
-            username:user._id,
+            userId:user._id,
             username:user.username,
             email:user.email,
             address:user.address,
@@ -47,8 +47,6 @@ const directOrder=async(req,res)=>{
           mailTransporter.sendMail(details,(err)=>{
             if(err)
             console.log('not sent' ,err.message)
-            else
-            console.log('email sent')
           })
         res.status(200).json({order})
     } catch (error) {

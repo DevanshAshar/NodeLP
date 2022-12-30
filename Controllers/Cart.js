@@ -30,31 +30,6 @@ const addCart=async(req,res)=>{
 const delCart=async(req,res)=>{
     const prodName=req.body
     const prod=await Product.findOne({prodName:req.body.prodName})
-       /* if((req.params.id)>(user.cart[0].quantity)){
-            res.status(400).json({message:'Not enough in the cart'})
-        }
-            var n=(userData.cart.quantity)-(req.params.id)
-            if(n===0){
-                //when all items from the cart are deleted s
-                 User.findByIdAndUpdate(userData._id,{
-                   
-                        cart:{
-                        }
-                    
-                })
-                res.status(200).json({message:'Cart Updated'})
-            }
-            else{
-                 User.findByIdAndUpdate(userData._id,{
-                    cart:{
-                        prodName:prod.prodName,
-                        price:prod.price,
-                        image:prod.image,
-                        quantity:n
-                    }
-                })
-                res.status(200).json({message:'Cart Updated'})
-            }*/
             try{
             userData.cart=userData.cart.filter((product)=>{
                 return product.product.prodName!==req.body.prodName})

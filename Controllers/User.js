@@ -166,17 +166,6 @@ const profilePic=async(req,res)=>{
         res.status(400).json({error:'Error'})
     }
 }
-
-const storage=multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,'./upload')
-    },
-    filename:function(req,file,cb){
-        cb(null,file.originalname)
-    }
-})
-var upload=multer({storage:storage})
-
 const sellerProd=async(req,res)=>{
     try{
         const products=await Product.find({sellerEmail:userData.email})

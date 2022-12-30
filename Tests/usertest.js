@@ -27,6 +27,17 @@ const testUser2={
     tokens:[{token:jwt.sign({email:'ashar.devansh+223@gmail.com'},"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")}]
 }
 const tkn2=testUser2.tokens[0].token
+const testUser5={
+    _id:new mongoose.Types.ObjectId(),
+    username:'supertest5',
+    password:'supertest523',
+    email:'ashar.devansh+523@gmail.com',
+    address:'supertest address',
+    mobile:'9283749275',
+    role:'seller',
+    tokens:[{token:jwt.sign({email:'ashar.devansh+523@gmail.com'},"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")}]
+}
+const tkn5=testUser5.tokens[0].token
 const testProduct1={
     _id:new mongoose.Types.ObjectId(),
     prodId:345,
@@ -58,6 +69,7 @@ beforeEach(async()=>{
     await Product.deleteMany({})
     await User(testUser1).save()
     await User(testUser2).save()
+    await User(testUser5).save()
     await Product(testProduct1).save()
 })
 test('signup test',async()=>{
@@ -110,14 +122,19 @@ test('profile pic',async()=>{
     .attach('profile',("C:/Users/Devansh Ashar/OneDrive/Pictures/Saved Pictures/ViratKohliRCB.jpg"))
     .expect(200)
 })   
-test('logout',async()=>{
-    await request(app).post('/user/logout')
-    .set('AuthenticateUser',`Bearer ${tkn}`)
-    .expect(200)
-})
 test('seller prod',async()=>{
     await request(app).post('/user/sellerProd')
     .set('AuthenticateUser',`Bearer ${tkn2}`)
+    .expect(200)
+})
+test('logout',async()=>{
+    await request(app).post('/user/logout')
+    .set('AuthenticateUser',`Bearer ${tkn2}`)
+    .expect(200)
+})
+test('logoutAll',async()=>{
+    await request(app).post('/user/logoutAll')
+    .set('AuthenticateUser',`Bearer ${tkn5}`)
     .expect(200)
 })
 test('delete user',async()=>{

@@ -91,24 +91,13 @@ const productImage=async(req,res)=>{
     try {
         let prod=await Product.findById(req.params.id);
         console.log(req.files)
-        prod.image=req.files
-        //console.log(prod.image)
+        prod.image=await(req.files)
         prod=await prod.save()
         res.status(200).json({message:'File Uploaded',prod})
       } catch (error) {
         res.status(400).json({error:'Error'});
       }
 }
-const storage=multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,'./upload')
-    },
-    filename:function(req,file,cb){
-        cb(null,file.originalname)
-    }
-})
-var upload=multer({storage:storage})
-
 const productCmp=async(req,res)=>{
     try{
         const {product1,product2}=req.body
