@@ -30,8 +30,9 @@ const {
     delCart
 }=require('../Controllers/Cart')
 router.post('/addCart',[authentication.verifyToken],addCart)
-router.post('/delCart/:id',[authentication.verifyToken],delCart)
-const order=require('../Controllers/Order')
-router.post('/order',[authentication.verifyToken],order)
+router.post('/delCart',[authentication.verifyToken],delCart)
+const {directOrder,cartOrder}=require('../Controllers/Order')
+router.post('/directOrder',[authentication.verifyToken],directOrder)
+router.post('/cartOrder',authentication.verifyToken,cartOrder)
 
 module.exports=router

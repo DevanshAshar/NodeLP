@@ -1,5 +1,9 @@
 const mongoose=require('mongoose')
-const orderSchema=new mongoose.Schema({
+const Schema=mongoose.Schema;
+const orderSchema=new Schema({
+    userId:{
+        type:String
+    },
     username:{
         type:String
     },
@@ -9,15 +13,28 @@ const orderSchema=new mongoose.Schema({
     address:{
         type:String
     },
-    productName:{
+    Number:{
         type:String
     },
-    cost:{
+    totalPrize:{
         type:Number
     },
-    quantity:{
-        type:Number
-    }
+    cart:[{
+        product:{productName:{
+            type:String,
+        },
+        prodId:{type:String},
+        prize:{
+            type:Number,
+        },
+        Quantity:{
+            type:Number
+        }
+    },
+
+        
+    }]
 })
+
 const Order=mongoose.model('Order',orderSchema)
 module.exports=Order

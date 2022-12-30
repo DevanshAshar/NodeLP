@@ -4,26 +4,25 @@ const User=require('../Models/User')
 const addCart=async(req,res)=>{
     const {prodName,Quantity}=req.body   
     const prod=await Product.findOne({prodName:req.body.prodName})
-    const user=userData
-    //console.log(user)
     if(!prod)
     res.status(400).json({message:'Item not found'})
     try{
         await User.findByIdAndUpdate(userData._id,{
             $addToSet:{
-                product:{
                 cart:{
+                    product:{
                     prodName:prod.prodName,
                     price:prod.price,
                     image:prod.image,
                     quantity:req.body.Quantity
+                    }
                 }
             }
-            }
+            })
             
-        })
-        await user.save()
-        res.status(200).json({message:'Added to cart'})
+        
+        await userData.save()
+        res.status(200).json({message:'Added to cart',userData})
     }catch(error){
         res.status(400).json({error:'Error'})
     }
@@ -31,7 +30,6 @@ const addCart=async(req,res)=>{
 const delCart=async(req,res)=>{
     const prodName=req.body
     const prod=await Product.findOne({prodName:req.body.prodName})
-    const user=userData
        /* if((req.params.id)>(user.cart[0].quantity)){
             res.status(400).json({message:'Not enough in the cart'})
         }
@@ -57,9 +55,14 @@ const delCart=async(req,res)=>{
                 })
                 res.status(200).json({message:'Cart Updated'})
             }*/
-            user.cart=user.cart.filter((product)=>{
-                return product.product.prodId!==req.body.prodId;})
-                res.status(200).json({message:'removed from cart',user})
+            try{
+            userData.cart=userData.cart.filter((product)=>{
+                return product.product.prodName!==req.body.prodName})
+                res.status(200).json({message:'removed from cart',userData})
+                await userData.save()
+            }catch(err){
+                res.status(400).json({error:err.message})
+            }
         }
 
 
