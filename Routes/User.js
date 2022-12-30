@@ -12,6 +12,7 @@ const {
     username,
     updateUser,
     logout,
+    logoutAll,
     deleteUser,
     sellerProd,
     profilePic
@@ -25,6 +26,7 @@ router.get('/:id',[authentication.verifyToken,authentication.verifyUser],usernam
 router.patch('/:id',[authentication.verifyToken,authentication.verifyUser],updateUser)
 router.delete('/:id',[authentication.verifyToken,authentication.verifyUser],deleteUser)
 router.post('/logout',[authentication.verifyToken],logout)
+router.post('/logoutAll',[authentication.verifyToken],logoutAll)
 router.post('/profile',upload.single('profile'),[authentication.verifyToken],profilePic)
 router.post('/sellerProd',[authentication.verifyToken],sellerProd)
 module.exports=router

@@ -40,8 +40,6 @@ const newUser=async(req,res)=>{
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
-            } else {
-             // console.log('Email sent: ' + info.response);
             }
           });
         res.json({message:'Success'}).status(200)
@@ -63,16 +61,6 @@ const userLogin=async(req,res)=>{
             else
             {
                const token=jwt.sign({email:req.body.email},SecretKey,{expiresIn:'1d'})
-               let oldTokens=User.tokens || []
-               if(oldTokens.length){
-                oldTokens=oldTokens.filter(t=>{
-                    timeDiff=(Date.now()-parseInt(t.signedAt))/1000
-                    if(timeDiff<86400){
-                        return t
-                    }
-                })
-               }
-               await User.findByIdAndUpdate(userData._id,{tokens:[...oldTokens,{token,signedAt: Date.now().toString()}]})
                userData.tokens=userData.tokens.concat({token})
                await userData.save()
                 return res.status(200).json({token:token,userData})
@@ -138,6 +126,19 @@ const deleteUser=async(req,res)=>{
     }
 }
 const logout=async(req,res)=>{
+    try {
+        const user=userData
+        let tkn=req.headers['authenticateuser']
+        tkn=tkn.slice(7,tkn.length)
+        user.tokens=user.tokens.filter((token)=>{
+            return token.token!=tkn;
+        })
+        res.status(200).json({message:'Logged Out'})
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+const logoutAll=async(req,res)=>{
     try{
         if(req.headers){
             const token=req.headers   
@@ -194,6 +195,7 @@ module.exports={
     updateUser,
     profilePic,
     logout,
+    logoutAll,
     sellerProd,
     deleteUser
 }
