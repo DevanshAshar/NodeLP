@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">86.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>90/110</span>
+                <span class='fraction'>95/110</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>21/30</span>
+                <span class='fraction'>25/30</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">86.36% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>90/110</span>
+                <span class='fraction'>95/110</span>
             </div>
         
             
@@ -272,46 +272,46 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -462,8 +462,8 @@ cloudinary.config({
 app.use(express.json()) 
 const newUser=async(req,res)=&gt;{
     const {username, password, email, address, mobile, role}=req.body;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(!username || !password || !email || !address || !mobile || !role)
-<span class="cstat-no" title="statement not covered" >    return res.status(400).json({error:"Please fill the necessary details "})</span>
+    if(!username || !password || !email || !address || !mobile || !role)
+    return res.status(400).json({error:"Please fill the necessary details "})
     const user=new User(req.body)
     try {
         await user.save()
@@ -487,20 +487,20 @@ const newUser=async(req,res)=&gt;{
           });
         res.json({message:'Success'}).status(200)
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({message:error.message}) </span>
+        res.status(500).json({message:error.message}) 
     }
 }
 const userLogin=async(req,res)=&gt;{
     const {email,password,role}=req.body
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(!email || !password || !role)
-<span class="cstat-no" title="statement not covered" >    return res.status(400).json({error:'Please Fill the Details'})</span>
+    if(!email || !password || !role)
+    return res.status(400).json({error:'Please Fill the Details'})
     try {
             const userData=await User.findOne({email:req.body.email})
-            <span class="missing-if-branch" title="if path not taken" >I</span>if(!userData)
-<span class="cstat-no" title="statement not covered" >            return res.status(400).json({error:'User not found'})</span>
+            if(!userData)
+            return res.status(400).json({error:'User not found'})
             const validPassword=await bcrypt.compare(req.body.password,userData.password)
-            <span class="missing-if-branch" title="if path not taken" >I</span>if(!userData || !validPassword || userData.role!=req.body.role)
-<span class="cstat-no" title="statement not covered" >            res.status(400).json({error:'Invalid credentials'})</span>
+            if(!userData || !validPassword || userData.role!=req.body.role)
+            res.status(400).json({error:'Invalid credentials'})
             else
             {
                const token=jwt.sign({email:req.body.email},SecretKey,{expiresIn:'1d'})
@@ -637,7 +637,7 @@ module.exports={
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-30T08:10:24.717Z
+                at 2022-12-31T10:23:42.700Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

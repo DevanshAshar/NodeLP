@@ -5,7 +5,7 @@ const addCart=async(req,res)=>{
     const {prodName,Quantity}=req.body   
     const prod=await Product.findOne({prodName:req.body.prodName})
     if(!prod)
-    res.status(400).json({message:'Item not found'})
+    return res.status(400).json({message:'Item not found'})
     try{
         await User.findByIdAndUpdate(userData._id,{
             $addToSet:{

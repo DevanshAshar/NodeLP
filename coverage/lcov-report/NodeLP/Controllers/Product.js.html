@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>63/77</span>
+                <span class='fraction'>66/77</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>14/18</span>
+                <span class='fraction'>16/18</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>63/77</span>
+                <span class='fraction'>66/77</span>
             </div>
         
             
@@ -198,27 +198,18 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -229,7 +220,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -237,7 +228,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -322,11 +322,11 @@ app.use(express.json())
 &nbsp;
 const newProduct=async(req,res)=&gt;{
     const {prodId,prodName, brand, model, price, category, specs,seller,sellerEmail,quantity}=req.body;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(!prodId || !prodName || !brand || !model|| !price || !category|| !specs || !seller || !sellerEmail || !quantity)
-<span class="cstat-no" title="statement not covered" >    return res.status(400).json({error:"Please fill the necessary details "})</span>
+    if(!prodId || !prodName || !brand || !model|| !price || !category|| !specs || !seller || !sellerEmail || !quantity)
+    return res.status(400).json({error:"Please fill the necessary details "})
     const sellerData=await User.findOne({email:sellerEmail})
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(!sellerData)
-<span class="cstat-no" title="statement not covered" >    return res.status(400).json({error:'Invalid credentials'})</span>
+    if(!sellerData)
+    return res.status(400).json({error:'Invalid credentials'})
     const prod=new Product(req.body) 
     try {
         await prod.save()
@@ -360,7 +360,7 @@ const prodname=async(req,res)=&gt;{
         else
 <span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="else path not taken" >E</span>res.status(300).json({message:'Product not found'})</span>
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({message:error.message})</span>
+        res.status(500).json({message:error.message})
     }
 }
 const brand=async(req,res)=&gt;{
@@ -439,7 +439,7 @@ module.exports={
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-30T08:10:24.717Z
+                at 2022-12-31T10:23:42.700Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

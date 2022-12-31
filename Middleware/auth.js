@@ -19,16 +19,12 @@ const authentication={
             try {
                 const data=jwt.verify(token,"QWERTYUIOPASDFGHJKLZXCVBNM1234567890")
                 const user=await User.findOne({email:data.email,token:token})
-                if(!user)
-                return res.status(401).json({error:'Unauthorized'})
                 userData=user
                 next()
             } catch (error) {
                 return res.status(400).json({error:'Invalid Token'})
             }
         }
-        else
-        return res.status(400).json({error:'Invalid Token'})
     }
 }catch (error) {
     return res.status(401).send(error.message)
