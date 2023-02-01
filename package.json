@@ -5,10 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "start":"nodemon app"
+    "start": "nodemon app"
   },
-  "jest":{
-    "collectCoverage":true
+  "jest": {
+    "collectCoverage": true
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cloudinary": "^1.32.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "eslint": "^8.27.0",
     "eslint-config-node": "^4.1.0",
@@ -28,7 +29,8 @@
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "jest": "^29.3.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
+    "mime": "^3.0.0",
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.5",
     "morgan": "^1.10.0",
@@ -36,7 +38,11 @@
     "nodemailer": "^6.8.0",
     "nyc": "^15.1.0",
     "prettier": "^2.7.1",
+    "razorpay": "^2.8.4",
     "supertest": "^6.3.3",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "fast-two-sms": "^3.0.0"
   }
 }

@@ -6,6 +6,10 @@ dotenv.config()
 const app=express()
 const User=require('../Models/User')
 const nodemailer=require('nodemailer')
+const fast2sms=require('fast-two-sms')
+const Razorpay=require('razorpay')
+const cors=require('cors')
+const mime=require('mime')
 const multer=require('multer')
 const SecretKey="QWERTYUIOPASDFGHJKLZXCVBNM1234567890"
 const Product = require('../Models/Product')
@@ -17,6 +21,7 @@ cloudinary.config({
     api_secret:"_zp9D4i_GJNc5QNjMob8OcKP2w4"
 })
 app.use(express.json()) 
+app.use(cors())
 const newUser=async(req,res)=>{
     const {username, password, email, address, mobile, role}=req.body;
     if(!username || !password || !email || !address || !mobile || !role)
@@ -156,16 +161,25 @@ const logoutAll=async(req,res)=>{
     }
 }
 
-const profilePic=async(req,res)=>{
-
-    const profile=await cloudinary.uploader.upload(req.file.path)
-    try{
-        await User.findByIdAndUpdate(userData._id,{image:profile.url})
-        res.send(req.file)
-    }catch(err){
-        res.status(400).json({error:'Error'})
+const profilePic = async (req, res) => {
+    try {
+      const uploadResult = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload(req.file.path, { allowed_formats: ['jpg', 'jpeg', 'png'] }, function(error, result) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+  
+      const profile = uploadResult;
+      await User.findByIdAndUpdate(userData._id, { image: profile.url });
+      res.send(req.file);
+    } catch (err) {
+      res.status(400).json({ error: 'Error' });
     }
-}
+  };
 const sellerProd=async(req,res)=>{
     try{
         const products=await Product.find({sellerEmail:userData.email})
@@ -173,6 +187,31 @@ const sellerProd=async(req,res)=>{
     }catch(error){
         res.status(400).json({error:'Error'})
     }
+}
+const forgotPass=async(req,res)=>{
+    const {username,mobile,email}=req.body
+    try{
+        const user=await User.find({mobile:req.body.mobile})
+        if(!user)
+        return res.status(400).json({error:"user not found"})
+        const resp=await fast2sms.sendMessage({authorization:"IsW0for5wdOuTn69lB7q2yCAMH8JXxhz4gtDYKP3UVN1veQaGjZMDUyGTg7p86a3EOnzFWt2KoV01xiQ",message:"Your OTP is 1234 devansh testing",numbers:[req.body.mobile]})//just for testing
+        console.log(resp)
+        res.status(200).json({message:'OTP sent'}) 
+    }
+    catch(err){
+        res.status(400).json(err.message)
+    }
+}
+const payment=async(req,res)=>{
+    let amount=req.body
+    var instance = new Razorpay({ key_id: 'rzp_test_NOaMnv64SC7X1y', key_secret: 'thr0tRAcA5sFS4Fz8rxGjp29' })
+
+let order=instance.orders.create({
+  amount: amount*100,
+  currency: "INR",
+  receipt: "receipt#1",
+})
+res.status(201).json({order})
 }
 module.exports={
     newUser,
@@ -186,5 +225,6 @@ module.exports={
     logout,
     logoutAll,
     sellerProd,
+    forgotPass,
     deleteUser
 }

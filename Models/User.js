@@ -57,7 +57,8 @@ const userSchema=new mongoose.Schema({
             image:{type:Buffer},
             quantity:{type:Number}
         }
-}]
+}],
+    otp:{type:Number}
 },{timestamps:true})
 
 userSchema.post('save',function(doc,next){
