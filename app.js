@@ -6,7 +6,7 @@ const app=express()
 
 
 //change to check co author
-
+//adding 
 require('./dbConnect')
 app.use(express.json())
 app.use(morgan('dev'))
